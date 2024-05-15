@@ -127,20 +127,25 @@ int main(void)
 		}
 		if(currentState1 == GPIO_PIN_SET)
 		{
+			count = 0;
 			setGPIOValue(z);
 			HAL_GPIO_WritePin(GPIOA,GPIO_PIN_10,GPIO_PIN_SET);
 			HAL_GPIO_WritePin(GPIOA,GPIO_PIN_10,GPIO_PIN_RESET);
-			z += 1;
 			HAL_Delay(500);
 			
 			if(z == 255) {
 				z = 0;
+			} else {
+				z = z + 1;
 			}
 		} else {
 			setGPIOValue(128);
 			z = 0;
-			HAL_GPIO_WritePin(GPIOA,GPIO_PIN_10,GPIO_PIN_SET);
+			if(count == 0)
+			{HAL_GPIO_WritePin(GPIOA,GPIO_PIN_10,GPIO_PIN_SET);
 			HAL_GPIO_WritePin(GPIOA,GPIO_PIN_10,GPIO_PIN_RESET);
+				count = 1;
+			}
 		}
 		previousState1 = currentState1;
 			
